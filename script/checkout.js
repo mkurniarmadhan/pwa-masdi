@@ -78,8 +78,6 @@ function displayNotification(title, body) {
       body: body,
       icon: "path/to/icon.png", // Ganti dengan path icon yang Anda inginkan
     });
-
-    // window.location.href = "../riwayat.html";
   } else if (Notification.permission !== "denied") {
     Notification.requestPermission().then(function (permission) {
       if (permission === "granted") {
@@ -90,6 +88,8 @@ function displayNotification(title, body) {
       }
     });
   }
+
+  window.location.href = "../riwayat.html";
 }
 
 // Meminta izin notifikasi saat halaman dimuat
