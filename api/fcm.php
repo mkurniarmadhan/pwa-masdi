@@ -15,8 +15,8 @@ $header = [
 $msg = [
     'to' => $token,
     'notification' => [
-        'title' => 'ADA BARANG BARU',
-        'body' => 'barang baru di tambahkan !',
+        'title' => 'PESANAN SIAP',
+        'body' => 'pesanan baru di tambahkan !',
         'icon' => '/assets/icons/android/android-launchericon-48-48.png'
     ]
 ];
