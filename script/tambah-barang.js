@@ -10,7 +10,7 @@ $("#form-barang").on("submit", function (event) {
     processData: false,
     success: function (data) {
       console.log(data);
-      // window.location.reload();
+      window.location.reload();
     },
     error: function (error) {
       console.error("Error:", error);
