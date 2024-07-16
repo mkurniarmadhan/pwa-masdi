@@ -40,7 +40,7 @@ function sendNotif(token) {
     contentType: "application/json",
     dataType: "json",
     data: JSON.stringify({
-      to: "eUujRltCXWXSo-aCQjH-gq:APA91bGjM-HhVMHIKI_REgji_sx1ei9-qQZ65blUBSFh3BeubIGbL8W_n1zqvf6GLcMU8CeEVhV_QkQ97ufNlCRApiJWSc2psiWgTeKsL-P9MWZLeBNii7fES_K0jmaWCtOGw152el9Q",
+      to: token,
       notification: {
         title: "Pesanan diterima",
         body: "Pesanan Kamu berhasil di buat",
