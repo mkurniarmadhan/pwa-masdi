@@ -8,9 +8,51 @@ $("#barang_id").val(cart[0].id_barang);
 $("#user_id").val(user);
 $("#total").val(total);
 
+const { nama_pemesan, phone, alamat } = JSON.parse(
+  localStorage.getItem("dataPesanan")
+);
+
+$("#nama_pemesan").val(nama_pemesan);
+$("#phone").val(phone);
+$("#alamat").val(alamat);
+
+// function cekKoneksi() {
+//   if (navigator.onLine) {
+//     let dataPesanan = JSON.parse(localStorage.getItem("dataPesanan"));
+//     kirimDataPesanan(dataPesanan);
+//   } else {
+//     const { nama_pemesan, phone, alamat } = JSON.parse(
+//       localStorage.getItem("dataPesanan")
+//     );
+
+//     $("#nama_pemesan").val(nama_pemesan);
+//     $("#phone").val(phone);
+//     $("#alamat").val(alamat);
+//     console.log("Currently offline. Login data will be sent when online.");
+//   }
+// }
+
+// cekKoneksi();
+
+// // Listen for online and offline events
+// window.addEventListener("online", cekKoneksi);
+// window.addEventListener("offline", cekKoneksi);
+
 $("#form-checkout").on("submit", function (event) {
   event.preventDefault();
   const data = new FormData(this);
+
+  var dataPesanan = {
+    barang_id: $("#barang_id").val(),
+    user_id: $("#user_id").val(),
+    total: $("#total").val(),
+
+    nama_pemesan: $("#nama_pemesan").val(),
+    phone: $("#phone").val(),
+    alamat: $("#alamat").val(),
+  };
+
+  localStorage.setItem("dataPesanan", JSON.stringify(dataPesanan));
 
   $.ajax({
     url: "./api/api-pesanan.php",
