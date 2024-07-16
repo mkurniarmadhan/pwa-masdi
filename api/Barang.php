@@ -54,8 +54,6 @@ class Barang
             $tokens[] = $row['token'];
         }
 
-
-
         $url = 'https://fcm.googleapis.com/fcm/send';
         $serverKey = 'AAAAiyFEpYA:APA91bGf75IoZA9zfmixAziXF6tKl2jfspN3l_d6HZ4GMGSGR0Wb9tm09dUuxTiRJqV2J5hM-VnaUBCnBp3fblSHrdlxic_03XQESrrJlDAoRkKJ9DuvGnA9UYc29Y7n4ujtvwOVPHCO';
 
