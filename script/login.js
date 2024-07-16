@@ -52,7 +52,9 @@ $("#form-daftar").on("submit", function (event) {
       password: password,
     },
     success: function (response) {
-      window.location.href = "../login.php";
+      if (response.status) {
+        window.location.href = "/login.php";
+      }
     },
     error: function (error) {
       console.error("Error:", error);
