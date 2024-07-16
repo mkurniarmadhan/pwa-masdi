@@ -31,3 +31,6 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($msg));
 $result = curl_exec($ch);
 curl_close($ch);
+
+
+echo $result;

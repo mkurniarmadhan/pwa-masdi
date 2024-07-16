@@ -45,12 +45,10 @@ const detectBrowser = () => {
 
 // Register service worker
 if ("serviceWorker" in navigator && "PushManager" in window) {
+  initializeFCM();
   window.addEventListener("load", () => {
-    initializeFCM();
     navigator.serviceWorker
-      .register("./service-worker.js", {
-        scope: "/",
-      })
+      .register("./sw.js")
       .then((registration) => {
         console.log(`service woreker registration  ${registration.scope} `);
       })
@@ -60,6 +58,10 @@ if ("serviceWorker" in navigator && "PushManager" in window) {
 
     navigator.serviceWorker.ready.then(function (registration) {
       console.log("A service worker is active:", registration.active);
+    });
+
+    navigator.serviceWorker.ready.then((registration) => {
+      return registration.sync.register("sync-data");
     });
   });
 }

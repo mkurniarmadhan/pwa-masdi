@@ -75,7 +75,7 @@ function sendNotif(token) {
   console.log(token);
   $.ajax({
     type: "GET",
-    url: `./api/fcm.php?token=dKilkHzjFrewuAqsSic8zs:APA91bGrVPw_xpee2g23R2GqYzhms72W2rApMmAxsBYbXkAFjnA0InJNauwGtRyocBxs_K7rUF9OpCtJWUAoEeF3V0inv4bN1qjBn9Rw2TQSmCce5AxRZJ7QfAcaDDt87GeZZUmntWmI`,
+    url: `./api/fcm.php?token=f26EjPknHWiZlacA6LBMSl:APA91bEA1j1bf8qUFexJtpVpnrO-0c_si_sb6wkCRYzml2eMPyqsOmJ_u2glLrKcc8SevXWoQxQq8cSAWAW2otytIpLKK8pX1z0YGMxw67Wru2M9pKK5PHZLjNFSy0ofTtjrVFhX87de`,
 
     success: function (response) {
       console.log(response);
