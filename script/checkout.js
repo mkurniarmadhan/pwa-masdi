@@ -63,7 +63,6 @@ $("#form-checkout").on("submit", function (event) {
       if (data.status === "success") {
         displayNotification("PESANAN BARU", "pesanan baru sudah tambahkan !");
         localStorage.setItem("cart", []);
-        window.location.href = "../riwayat.html";
       }
       console.log(data);
     },
@@ -79,6 +78,8 @@ function displayNotification(title, body) {
       body: body,
       icon: "path/to/icon.png", // Ganti dengan path icon yang Anda inginkan
     });
+
+    window.location.href = "../riwayat.html";
   } else if (Notification.permission !== "denied") {
     Notification.requestPermission().then(function (permission) {
       if (permission === "granted") {
