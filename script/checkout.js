@@ -79,7 +79,7 @@ function displayNotification(title, body) {
       icon: "path/to/icon.png", // Ganti dengan path icon yang Anda inginkan
     });
 
-    window.location.href = "../riwayat.html";
+    // window.location.href = "../riwayat.html";
   } else if (Notification.permission !== "denied") {
     Notification.requestPermission().then(function (permission) {
       if (permission === "granted") {
