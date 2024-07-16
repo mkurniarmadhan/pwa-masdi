@@ -62,7 +62,11 @@ $("#form-checkout").on("submit", function (event) {
     success: function (data) {
       if (data.status === "success") {
         displayNotification("PESANAN BARU", "pesanan baru sudah tambahkan !");
-        localStorage.setItem("cart", []);
+
+        window.setTimeout(function () {
+          localStorage.setItem("cart", []);
+          window.location.href = "../riwayat.html";
+        }, 3000);
       }
       console.log(data);
     },
@@ -88,10 +92,6 @@ function displayNotification(title, body) {
       }
     });
   }
-
-  window.setTimeout(function () {
-    window.location.href = "../riwayat.html";
-  }, 3000);
 }
 
 // Meminta izin notifikasi saat halaman dimuat
