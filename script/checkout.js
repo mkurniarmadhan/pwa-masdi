@@ -89,7 +89,9 @@ function displayNotification(title, body) {
     });
   }
 
-  window.location.href = "../riwayat.html";
+  window.setTimeout(function () {
+    window.location.href = "../riwayat.html";
+  }, 3000);
 }
 
 // Meminta izin notifikasi saat halaman dimuat
