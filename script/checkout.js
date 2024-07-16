@@ -61,9 +61,9 @@ $("#form-checkout").on("submit", function (event) {
     processData: false,
     success: function (data) {
       if (data.status === "success") {
+        displayNotification("PESANAN BARU", "pesanan baru sudah tambahkan !");
         localStorage.setItem("cart", []);
         window.location.href = "../riwayat.html";
-        displayNotification("PESANAN BARU", "pesanan baru sudah tambahkan !");
       }
       console.log(data);
     },
