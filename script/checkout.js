@@ -8,13 +8,12 @@ $("#barang_id").val(cart[0].id_barang);
 $("#user_id").val(user);
 $("#total").val(total);
 
-const { nama_pemesan, phone, alamat } = JSON.parse(
-  localStorage.getItem("dataPesanan")
-);
+const { nama_pemesan, phone, alamat } =
+  JSON.parse(localStorage.getItem("dataPesanan")) || [];
 
-$("#nama_pemesan").val(nama_pemesan);
-$("#phone").val(phone);
-$("#alamat").val(alamat);
+$("#nama_pemesan").val(nama_pemesan) ?? "";
+$("#phone").val(phone) ?? "";
+$("#alamat").val(alamat) ?? "";
 
 // function cekKoneksi() {
 //   if (navigator.onLine) {
@@ -76,7 +75,7 @@ function sendNotif(token) {
   console.log(token);
   $.ajax({
     type: "GET",
-    url: `./api/fcm.php?token=${token}`,
+    url: `./api/fcm.php?token=dKilkHzjFrewuAqsSic8zs:APA91bGrVPw_xpee2g23R2GqYzhms72W2rApMmAxsBYbXkAFjnA0InJNauwGtRyocBxs_K7rUF9OpCtJWUAoEeF3V0inv4bN1qjBn9Rw2TQSmCce5AxRZJ7QfAcaDDt87GeZZUmntWmI`,
 
     success: function (response) {
       console.log(response);
