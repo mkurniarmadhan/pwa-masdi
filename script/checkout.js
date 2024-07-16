@@ -1,7 +1,9 @@
 const cart = JSON.parse(localStorage.getItem("cart")) || [];
 const user = CookieHelper.getCookie("user_id");
 const total = cart.reduce((sum, product) => sum + product.harga, 0);
+const token = localStorage.getItem("pwa-Notif");
 
+console.log(token);
 $("#barang_id").val(cart[0].id_barang);
 $("#user_id").val(user);
 $("#total").val(total);
@@ -9,7 +11,7 @@ $("#total").val(total);
 $("#form-checkout").on("submit", function (event) {
   event.preventDefault();
   const data = new FormData(this);
-  const token = localStorage.getItem("pwa-Notif");
+
   $.ajax({
     url: "./api/api-pesanan.php",
     type: "POST",
@@ -29,29 +31,12 @@ $("#form-checkout").on("submit", function (event) {
 });
 
 function sendNotif(token) {
+  console.log(token);
   $.ajax({
-    type: "POST",
-    url: "https://fcm.googleapis.com/fcm/send",
-    headers: {
-      Authorization:
-        "key=" +
-        "AAAAiyFEpYA:APA91bGf75IoZA9zfmixAziXF6tKl2jfspN3l_d6HZ4GMGSGR0Wb9tm09dUuxTiRJqV2J5hM-VnaUBCnBp3fblSHrdlxic_03XQESrrJlDAoRkKJ9DuvGnA9UYc29Y7n4ujtvwOVPHCO",
-    },
-    contentType: "application/json",
-    dataType: "json",
-    data: JSON.stringify({
-      to: token,
-      notification: {
-        title: "Pesanan diterima",
-        body: "Pesanan Kamu berhasil di buat",
-      },
-    }),
-    success: function (response) {
-      if (response.success) {
-        localStorage.setItem("cart", JSON.stringify([]));
-        window.location.href = "../riwayat.html";
-      }
+    type: "GET",
+    url: `./api/fcm.php?token=${token}`,
 
+    success: function (response) {
       console.log(response);
     },
     error: function (xhr, status, error) {

@@ -20,8 +20,6 @@ switch ($type) {
     case 'token':
         $db = new KoneksiDatabase();
         $koneksi = $db->getKoneksi();
-
-
         $query = "INSERT INTO notifikasi (token) VALUES (:token)
           ON DUPLICATE KEY UPDATE token = :token2
         ";
@@ -42,10 +40,7 @@ switch ($type) {
 
 
         break;
-    case 'daftar':
-        $response = $userController->daftar($nama, $alamat, $email, $password);
-        echo json_encode(array("status" => $response));
-        break;
+
 
     default:
         header("HTTP/1.0 405 Method Not Allowed");
