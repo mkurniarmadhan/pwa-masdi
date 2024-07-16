@@ -45,6 +45,6 @@ function addToCart(id_barang, nama_barang, harga) {
   if (CookieHelper.isLogin) {
     window.location.href = "checkout.html";
   } else {
-    window.location.href = "login.html";
+    window.location.href = "login.php";
   }
 }

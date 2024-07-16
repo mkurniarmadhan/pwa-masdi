@@ -93,10 +93,11 @@
       if (!CookieHelper.isLogin()) {
         btnRiwayat.hide()
         btnKeluar.hide()
-      }
-      btnMasuk.hide()
-      btnKeluar.click(() => {
+      } else {
 
+        btnMasuk.hide()
+      }
+      btnKeluar.click(() => {
         CookieHelper.removeCookie('logIn')
         CookieHelper.removeCookie('isAdmin')
         window.location.href = './login.php'
