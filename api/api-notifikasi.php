@@ -23,10 +23,11 @@ switch ($type) {
 
 
         $query = "INSERT INTO notifikasi (token) VALUES (:token)
-          ON DUPLICATE KEY UPDATE token= :token
+          ON DUPLICATE KEY UPDATE token = :token2
         ";
         $stmt = $koneksi->prepare($query);
         $stmt->bindParam(':token', $token);
+        $stmt->bindParam(':token2', $token);
 
 
         if ($stmt->execute()) {
