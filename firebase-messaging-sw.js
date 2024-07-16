@@ -14,7 +14,7 @@ firebase.initializeApp({
 });
 
 const messaging = firebase.messaging();
-
+messaging.on;
 messaging.setBackgroundMessageHandler((payload) => {
   const title = "Background Message Title";
   const options = {

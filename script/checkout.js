@@ -61,7 +61,9 @@ $("#form-checkout").on("submit", function (event) {
     processData: false,
     success: function (data) {
       if (data.status === "success") {
-        sendNotif(token);
+        localStorage.setItem("cart", []);
+        window.location.href = "../riwayat.html";
+        displayNotification("PESANAN BARU", "pesanan baru sudah tambahkan !");
       }
       console.log(data);
     },
@@ -71,6 +73,31 @@ $("#form-checkout").on("submit", function (event) {
   });
 });
 
+function displayNotification(title, body) {
+  if (Notification.permission === "granted") {
+    new Notification(title, {
+      body: body,
+      icon: "path/to/icon.png", // Ganti dengan path icon yang Anda inginkan
+    });
+  } else if (Notification.permission !== "denied") {
+    Notification.requestPermission().then(function (permission) {
+      if (permission === "granted") {
+        new Notification(title, {
+          body: body,
+          icon: "path/to/icon.png", // Ganti dengan path icon yang Anda inginkan
+        });
+      }
+    });
+  }
+}
+
+// Meminta izin notifikasi saat halaman dimuat
+if (
+  Notification.permission !== "granted" &&
+  Notification.permission !== "denied"
+) {
+  Notification.requestPermission();
+}
 function sendNotif(token) {
   console.log(token);
   $.ajax({
