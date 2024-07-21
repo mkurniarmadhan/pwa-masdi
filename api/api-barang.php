@@ -1,75 +1,146 @@
 <?php
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: *');
-header('Content-Type: application/json');
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "db_pwa";
 
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-require_once './BarangController.php';
-
-// Buat objek dari BarangController
-$barangController = new BarangController();
-
-$data = json_decode(file_get_contents("php://input"), true);
-
-
-
-// Mendapatkan semua data user
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $response = $barangController->semuaBarang();
-    echo json_encode($response);
+if ($conn->connect_error) {
+    die(json_encode(["error" => $conn->connect_error]));
 }
 
+$method = $_SERVER['REQUEST_METHOD'];
 
-// Menambahkan barang baru
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+function handleFileUpload($file)
+{
+    $target_dir = "../uploads/";
+    $target_file = $target_dir . basename($file["name"]);
+    if (move_uploaded_file($file["tmp_name"], $target_file)) {
+        return $target_file;
 
-    $nama_barang = $_POST['nama_barang'];
-    $harga_barang = $_POST['harga_barang'];
-
-    // Menangani upload foto
-    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = '../uploads/';
-        $uploadFile = $uploadDir . basename($_FILES['foto']['name']);
-        // Memindahkan file ke direktori tujuan
-        if (move_uploaded_file($_FILES['foto']['tmp_name'], $uploadFile)) {
-
-            $foto = $_FILES['foto']['name'];
-            $response = $barangController->tambahBarang($nama_barang, $harga_barang, $foto);
-
-            if ($response) {
-                echo json_encode(['status' => 'success', 'msg' => 'Barang disimpan']);
-            } else {
-                echo json_encode(['status' => 'error', 'msg' => 'Terjadi kesalahan saat menyimpan data ke database.']);
-            }
-        } else {
-            echo json_encode(['status' => 'error', 'msg'  => 'Terjadi kesalahan saat mengupload foto']);
-        }
-    } else {
-        echo json_encode(['status' => 'error', 'msg'  => 'No uypdaload file ']);
+        // return $file['name'];
     }
+    return null;
 }
 
 
-// Mengupdate data barang
-if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+switch ($method) {
+    case 'GET':
+        if (isset($_GET['id'])) {
+            $id = intval($_GET['id']);
+            $sql = "SELECT * FROM barang WHERE id = $id";
+            $result = $conn->query($sql);
+            echo json_encode($result->fetch_assoc());
+        } else {
+            $sql = "SELECT * FROM barang";
+            $result = $conn->query($sql);
+            $data = [];
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            echo json_encode($data);
+        }
+        break;
+    case 'POST':
 
 
-    $id = $data['id'];
-    $nama_barang = $data['nama_barang'];
-    $harga = $data['harga'];
-    $stok = $data['stok'];
+        $input = json_decode(file_get_contents('php://input'), true);
 
-    $response = $barangController->ubahBarang($id, $nama_barang, $harga, $stok);
-    echo json_encode(array("success" => $response));
+        $nama = $_POST['nama_barang'];
+        $harga = $_POST['harga_barang'];
+
+        $foto = handleFileUpload($_FILES['foto']);
+
+
+        $sql = "INSERT INTO barang (nama_barang, harga, foto) VALUES ('$nama', '$harga','$foto')";
+        if ($conn->query($sql) === TRUE) {
+            // sendNotif();
+            echo json_encode(["id" => $conn->insert_id]);
+        } else {
+            echo json_encode(["error" => $conn->error]);
+        }
+        break;
+    case 'PUT':
+        $input = json_decode(file_get_contents('php://input'), true);
+        $id = intval($input['id']);
+        $nama = $input['nama_barang'];
+        $harga = $input['harga_barang'];
+
+        $sql = "UPDATE barang SET nama = '$nama', harga = '$harga' WHERE id = $id";
+        if ($conn->query($sql) === TRUE) {
+            echo json_encode(["message" => "Record updated successfully"]);
+        } else {
+            echo json_encode(["error" => $conn->error]);
+        }
+        break;
+    case 'DELETE':
+        $id = intval($_GET['id']);
+        $sql = "DELETE FROM barang WHERE id = $id";
+        if ($conn->query($sql) === TRUE) {
+            echo json_encode(["message" => "Record deleted successfully"]);
+        } else {
+            echo json_encode(["error" => $conn->error]);
+        }
+        break;
 }
 
+// function sendNotif()
+// {
 
+//     $stmt = $conn->query("SELECT token FROM notifikasi");
+//     $stmt->execute();
 
-// Menghapus user
-if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    $id = $data['id'];
+//     $sql = "SELECT * FROM barang";
+//     $result = $conn->query($sql);
+//     $data = [];
+//     while ($row = $result->fetch_assoc()) {
+//         $data[] = $row;
+//     }
 
-    $response = $barangController->hapusBarang($id);
-    echo json_encode(array("success" => $response));
-}
+//     $tokens = [];
+//     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+//         $tokens[] = $row['token'];
+//     }
+
+//     $url = 'https://fcm.googleapis.com/fcm/send';
+//     $serverKey = 'AAAAiyFEpYA:APA91bGf75IoZA9zfmixAziXF6tKl2jfspN3l_d6HZ4GMGSGR0Wb9tm09dUuxTiRJqV2J5hM-VnaUBCnBp3fblSHrdlxic_03XQESrrJlDAoRkKJ9DuvGnA9UYc29Y7n4ujtvwOVPHCO';
+
+//     $notification = [
+//         'title' => 'BARANG BARU',
+//         'body' => 'ADa Barang Baru ! buruan cek',
+//         'sound' => 'default',
+//     ];
+
+//     $extraNotificationData = ["message" => $notification, "moredata" => 'dd'];
+
+//     $fcmNotification = [
+//         'registration_ids' => $tokens, // array of tokens
+//         'notification' => $notification,
+//         'data' => $extraNotificationData,
+//     ];
+
+//     $headers = [
+//         'Authorization: key=' . $serverKey,
+//         'Content-Type: application/json',
+//     ];
+
+//     $ch = curl_init();
+//     curl_setopt($ch, CURLOPT_URL, $url);
+//     curl_setopt($ch, CURLOPT_POST, true);
+//     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fcmNotification));
+//     $result = curl_exec($ch);
+//     curl_close($ch);
+
+//     return $result;
+// }
+
+$conn->close();

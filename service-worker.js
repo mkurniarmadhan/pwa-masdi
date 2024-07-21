@@ -1,9 +1,9 @@
 // Settings
 const SETTINGS = {
-  appName: "PWA",
+  appName: "masdi-pwa",
   // To clear cache on devices, always change SETTINGS.appVersion number after making changes.
   // The app will serve fresh content right away or after 2-3 refreshes (open / close)
-  appVersion: "1.0.0",
+  appVersion: "3.0.0",
   diagnostics: false, // Set to true to enable diagnostic logs
   // Add all files you want to view offline to cachedFiles array.
   // Leave the array empty to disable offline mode and file caching.
@@ -17,8 +17,24 @@ const SETTINGS = {
     "assets/app-icons/icon-32x32.png",
     "assets/app-icons/icon-180x180.png",
     "assets/app-icons/icon-144x144.png",
-    "https://getbootstrap.com/docs/5.3/assets/img/favicons/android-chrome-192x192.png",
-    "https://getbootstrap.com/docs/5.3/assets/img/favicons/android-chrome-512x512.png",
+    "assets/app-icons/icon-192x192.png",
+    "assets/app-icons/icon-512x512.png",
+    // Theme switcher
+    "assets/js/theme-switcher.js",
+    // Web font
+    "assets/fonts/inter-variable-latin.woff2",
+    // Icon font
+    "assets/icons/cartzilla-icons.woff2",
+    "assets/icons/cartzilla-icons.min.css",
+    // Theme styles
+    "assets/css/theme.min.css",
+    // Theme scripts
+    "assets/js/theme.min.js",
+    // Images
+    "assets/img/intro/pages-light.jpg",
+    "assets/img/intro/pages-dark.png",
+    // Add more files as needed
+    // Vendors (plugins): Please note that the file paths for vendor assets differ between the development environment and the production environment (within the 'dist' folder). Ensure that you adjust these paths appropriately when transitioning from development to production.
   ],
 };
 SETTINGS.cacheName = `${SETTINGS.appName}-${SETTINGS.appVersion}`;

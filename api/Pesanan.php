@@ -18,12 +18,13 @@ class Pesanan
         $stmt->bindParam(':alamat', $alamat, PDO::PARAM_STR);
         $stmt->bindParam(':barang_id', $barang_id, PDO::PARAM_INT);
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->bindParam(':total', $total, PDO::PARAM_INT);
+        $stmt->bindParam(':total', $total, PDO::PARAM_STR);
 
 
         if ($stmt->execute()) {
-
-            return true;
+            $stmt = $this->koneksi->query("SELECT LAST_INSERT_ID()");
+            $lastId = $stmt->fetchColumn();
+            return $lastId;
         } else {
             return false;
         }

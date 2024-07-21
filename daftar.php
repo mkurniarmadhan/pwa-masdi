@@ -11,7 +11,7 @@
   <link rel="manifest" href="/manifest.json">
 
 
-  <title>HOME</title>
+  <title>Daftar</title>
 
   <!-- boostrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
@@ -22,7 +22,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
 
 
-  <script src="./js/cookieHelper.js"></script>
+  <script src="./script/cookieHelper.js"></script>
 
   <script>
     if (CookieHelper.isLogin()) {
@@ -34,21 +34,29 @@
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
   <main class="form-signin w-100 m-auto">
-    <form id="form-login">
-      <h1 class="h3 mb-3 fw-normal">MASUK</h1>
-
+    <h1 class="h3 mb-3 fw-normal">FORM DAFTAR</h1>
+    <form id="form-daftar">
       <div class="form-floating">
-        <input type="email" class="form-control" name="email" id="email" />
-        <label for="floatingInput">Email address</label>
-      </div>
-      <div class="form-floating">
-        <input type="password" class="form-control" name="password" id="password" />
-        <label for="floatingPassword">Password</label>
+        <input type="text" class="form-control" name="nama" id="nama" />
+        <label>Nama </label>
       </div>
 
-      <p>belum punya akun ? <a href="/daftar.html">daftar</a></p>
-      <button class="btn btn-primary w-100 py-2" type="submit">Masuk</button>
-      <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
+      <div class="form-floating">
+        <input type="text" class="form-control" name="alamat" id="alamat" />
+        <label>ALamat </label>
+      </div>
+      <div class="form-floating">
+        <input type="email" name="email" id="email" class="form-control" />
+        <label>Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" name="password" id="password" class="form-control" />
+        <label>Password</label>
+      </div>
+
+      <p>sudah punya akun ? <a href="/login.php">login</a></p>
+
+      <button class="btn btn-primary w-100 py-2" type="submit">DAFTAR</button>
     </form>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

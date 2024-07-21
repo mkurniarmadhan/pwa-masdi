@@ -11,19 +11,14 @@ $pesananController = new PesananController();
 
 
 
-
 // Mendapatkan semua data user
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
-
-
 
 
     $user_id = $_GET['user_id'] ?? 1;
     $response = $pesananController->semuaPesanan($user_id);
     echo json_encode($response);
 }
-
 
 // Menambahkan barang baru
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -35,13 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $alamat = $_POST['alamat'];
     $barang_id = $_POST['barang_id'];
     $user_id = $_POST['user_id'];
-    $total = $_POST['total'];
+    $total = $_POST['total_bayar'];
 
 
     $response = $pesananController->tambahPesanan($nama_pemesan, $phone, $alamat, $barang_id, $user_id, $total);
 
     if ($response) {
-        echo json_encode(['status' => 'success', 'msg' => 'Barang disimpan']);
+        echo json_encode(['status' => 'success', 'msg' => $response]);
     } else {
         echo json_encode(['status' => 'error', 'msg' => 'Terjadi kesalahan saat menyimpan data ke database.']);
     }

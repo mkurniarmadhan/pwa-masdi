@@ -23,4 +23,11 @@ class BarangController
     {
         return $this->barang->semuaBarang();
     }
+    // Method untuk mengambil hapus barang
+    public function hapusBarang($id)
+    {
+
+
+        return $this->barang->hapusBarang($id);
+    }
 }

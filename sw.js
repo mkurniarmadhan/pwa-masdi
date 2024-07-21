@@ -1,17 +1,25 @@
 const CACHE_NAME = "pwa-masdi";
 
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/assets/js/main.js",
+  // php gile
+  "/index.php",
+  "/admin.php",
+  "/checkout.php",
+  "/daftar.php",
+  "/login.php",
+  "/riwayat.php",
+
+  // assets css
+  "/login.css",
   "/assets/css/style.css",
-  "/login.html",
-  "/firebase-messaging-sw.js",
+  "/login.php",
   "/manifest.json",
-  "/sw.js",
   "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css",
   "https://getbootstrap.com/docs/5.0/assets/img/favicons/favicon.ico",
   "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js",
+  "https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js",
+  "https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js",
+  "/firebase-messaging-sw.js",
 ];
 
 // Install event

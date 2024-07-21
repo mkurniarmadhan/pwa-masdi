@@ -25,7 +25,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="./script/cookieHelper.js"></script>
+    <script src="./js/cookieHelper.js"></script>
     <script>
         if (!CookieHelper.isLogin()) {
             // Jika belum login, redirect ke halaman login
@@ -46,10 +46,8 @@
 
                 <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
                     <div class="d-flex me-3">
-                        <!-- <a class="btn btn-primary me-2" href="./login.php">Masuk</a> -->
-                        <a id="btnLogin" class="btn btn-success" href="/login.html">Masuk</a>
-                        <a id="btnRiwayat" class="btn btn-success" href="/riwayat.html">Riwayat Saya</a>
-                        <a class="btn btn-warning ms-2" id="install_button" href="#">Install App</a>
+                        <a id="btnMasuk" class="btn btn-primary me-2" href="/login.php">Masuk</a>
+                        <a id="btnRiwayat" class="btn btn-success" href="/riwayat.php">Riwayat Saya</a>
                         <button id="btnKeluar" class="btn btn-danger ms-2">Keluar</button>
                     </div>
                 </nav>
@@ -57,9 +55,13 @@
 
             <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
                 <h1 class="display-4 fw-normal text-body-emphasis">
-                    SELAMAT DATANG ADMIN <span id="textStatus"></span>
+                    KATALOG <span id="textStatus"></span>
                 </h1>
-
+                <p class="fs-5 text-body-secondary">
+                    Selamat datang di katalog bengekel masdi, disini kamu bisa memesan
+                    barang dari katalog bengkel masdi.
+                    <br />Selamat Menjelajah
+                </p>
             </div>
         </header>
 
@@ -82,12 +84,12 @@
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
-                    <form id="form-barang" class="needs-validation" enctype="multipart/form-data">
+                    <form id="form-tambah-barang" class="needs-validation" enctype="multipart/form-data">
                         <div class="row g-3">
                             <div class="col-12">
                                 <label for="nama_barang" class="form-label">Nama Barang
                                 </label>
-                                <input type="text" class="form-control" name="nama_barang" id="nama_barang" placeholder="" value="" />
+                                <input type="text" class="form-control" name="nama_barang" id="nama_barang" />
                                 <div class="invalid-feedback">
                                     Valid first name is required.
                                 </div>
@@ -95,7 +97,7 @@
 
                             <div class="col-12">
                                 <label for="harga_barang" class="form-label">harga Barang</label>
-                                <input type="text" class="form-control" id="harga_barang" name="harga_barang" placeholder="" value="" />
+                                <input type="number" class="form-control" id="harga_barang" name="harga_barang" />
                                 <div class="invalid-feedback">
                                     Valid last name is required.
                                 </div>
@@ -130,20 +132,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <script src="./script/get-barang.js"></script>
-    <script src="./script/tambah-barang.js"></script>
-    <script>
-        const btnLogin = $("#btnLogin");
-
-        const btnKeluar = $("#btnKeluar");
+    <script src="./js/main.js"></script>
 
 
-        btnLogin.hide();
-        btnKeluar.click(function() {
-            CookieHelper.removeCookie('logIn')
-            window.location.reload()
-        })
-    </script>
 </body>
 
 </html>

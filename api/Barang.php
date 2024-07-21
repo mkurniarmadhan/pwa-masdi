@@ -12,9 +12,6 @@ class Barang
     public function tambahBarang($nama_barang, $harga, $foto)
     {
 
-
-
-
         $stmt = $this->koneksi->prepare("INSERT INTO barang (nama_barang, harga, foto) VALUES (:nama_barang, :harga, :foto)");
         $stmt->bindParam(':nama_barang', $nama_barang, PDO::PARAM_STR);
         $stmt->bindParam(':harga', $harga, PDO::PARAM_INT);
@@ -34,11 +31,24 @@ class Barang
     // Method untuk mengambil semua barang
     public function semuaBarang()
     {
-
         $stmt = $this->koneksi->query("SELECT * FROM barang");
         $barang = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $barang;
         $this->koneksi = null; // Close connection after successful operation
+        exit(); // Exit script after response
+    }
+
+    // Method untuk mengambil semua barang
+    public function hapusBarang($id)
+    {
+
+        return json_encode('oke');
+        $stmt = $this->koneksi->prepare("DELETE FROM barang WHERE id =:id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        return 'oke';
+        // Close connection after successful operation
         exit(); // Exit script after response
     }
 
