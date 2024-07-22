@@ -56,7 +56,7 @@ function handleSendNotif()
     $result = $conn->query($sql);
     $tokens = [];
     while ($row = $result->fetch_assoc()) {
-        $tokens[] = $row;
+        $tokens[] = $row['token'];
     }
 
     $serverKey = 'AAAAiyFEpYA:APA91bGf75IoZA9zfmixAziXF6tKl2jfspN3l_d6HZ4GMGSGR0Wb9tm09dUuxTiRJqV2J5hM-VnaUBCnBp3fblSHrdlxic_03XQESrrJlDAoRkKJ9DuvGnA9UYc29Y7n4ujtvwOVPHCO';
@@ -69,6 +69,7 @@ function handleSendNotif()
 
     $data = [
         'registration_ids' => $tokens,
+
         'notification' => $notification,
     ];
 

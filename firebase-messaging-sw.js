@@ -14,12 +14,26 @@ firebase.initializeApp({
 });
 
 const messaging = firebase.messaging();
-messaging.on;
-messaging.setBackgroundMessageHandler((payload) => {
-  const title = "Background Message Title";
-  const options = {
-    body: payload.data.status,
+
+// messaging.setBackgroundMessageHandler((payload) => {
+//   const title = "Background Message Title";
+//   const options = {
+//     body: payload.data.status,
+//     icon: "/firebase-logo.png",
+//   };
+//   return self.registration.showNotification(title, options);
+// });
+
+messaging.onMessage((payload) => {
+  console.log("Message received. ", payload);
+  // Customize notification here
+  const notificationTitle = payload.notification.title;
+  const notificationOptions = {
+    body: payload.notification.body,
     icon: "/firebase-logo.png",
   };
-  return self.registration.showNotification(title, options);
+
+  if (Notification.permission === "granted") {
+    new Notification(notificationTitle, notificationOptions);
+  }
 });
