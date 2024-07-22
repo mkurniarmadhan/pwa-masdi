@@ -19,6 +19,27 @@ const config = {
 firebase.initializeApp(config);
 const messaging = firebase.messaging();
 
+Notification.requestPermission().then((permission) => {
+  if (permission === "granted") {
+    // Handle foreground messages
+    messaging.onMessage((payload) => {
+      console.log("Message received. ", payload);
+      // Customize notification here
+      const title = payload.notification.title;
+      const options = {
+        body: payload.notification.body,
+        icon: "/firebase-logo.png",
+      };
+
+      if (Notification.permission === "granted") {
+        new Notification(title, options);
+      }
+    });
+  } else {
+    console.log("Notification permission denied.");
+  }
+});
+
 // Helper functions for detecting user's operating system and browser
 const userAgent = window.navigator.userAgent.toLowerCase();
 

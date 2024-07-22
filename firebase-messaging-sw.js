@@ -15,14 +15,15 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// messaging.setBackgroundMessageHandler((payload) => {
-//   const title = "Background Message Title";
-//   const options = {
-//     body: payload.data.status,
-//     icon: "/firebase-logo.png",
-//   };
-//   return self.registration.showNotification(title, options);
-// });
+messaging.setBackgroundMessageHandler((payload) => {
+  const title = "Background Message Title";
+  const options = {
+    body: payload.data.status,
+    icon: "/firebase-logo.png",
+  };
+
+  return self.registration.showNotification(title, options);
+});
 
 messaging.onMessage((payload) => {
   console.log("Message received. ", payload);
@@ -34,6 +35,6 @@ messaging.onMessage((payload) => {
   };
 
   if (Notification.permission === "granted") {
-    new Notification(notificationTitle, notificationOptions);
+    return new Notification(notificationTitle, notificationOptions);
   }
 });
