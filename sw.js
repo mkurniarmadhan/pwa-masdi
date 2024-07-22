@@ -8,12 +8,13 @@ const urlsToCache = [
   "/daftar.php",
   "/login.php",
   "/riwayat.php",
+  "/js/pwa.js",
 
   // assets css
   "/login.css",
   "/assets/css/style.css",
   "/login.php",
-  "/manifest.json",
+  "/icons/manifest.json",
   "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css",
   "https://getbootstrap.com/docs/5.0/assets/img/favicons/favicon.ico",
   "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js",
@@ -26,10 +27,22 @@ const urlsToCache = [
 self.addEventListener("install", (event) => {
   console.log("PWA DI INSTALL ");
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log("TAMBHAKAN SUMBER DAYA KE CACHE ");
-      return cache.addAll(urlsToCache);
-    })
+    caches
+      .open(CACHE_NAME)
+      .then((cache) => {
+        console.log("TAMBHAKAN SUMBER DAYA KE CACHE ");
+        return cache.addAll(urlsToCache);
+      })
+      .then(() => {
+        return self.skipWaiting();
+      })
+      .catch((err) => {
+        // Output an error if the paths to the files are incorrect
+        console.log(
+          `[Service Worker Cache] Error Check SETTINGS.cachedFiles array in the service-worker.js - files are missing or paths to the files are incorrectly written - ${err}`,
+          "error"
+        );
+      })
   );
 });
 
@@ -50,15 +63,16 @@ self.addEventListener("fetch", (event) => {
 
 // Activate event
 self.addEventListener("activate", (event) => {
-  const cacheWhitelist = [CACHE_NAME];
+  self.clients.claim();
+  // const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
+        cacheNames
+          .filter((cacheName) => cacheName !== CACHE_NAME)
+          .map((cacheName) => {
+            caches.delete(cacheName);
+          })
       );
     })
   );

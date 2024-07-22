@@ -1,4 +1,5 @@
 // vatiabel
+
 let userId = CookieHelper.getCookie("user_id");
 
 const btnMasuk = $("#btnMasuk");
@@ -30,6 +31,7 @@ if (!CookieHelper.isLogin()) {
 } else {
   btnMasuk.hide();
 }
+
 btnKeluar.click(() => {
   CookieHelper.removeCookie("logIn");
   CookieHelper.removeCookie("isAdmin");
@@ -96,7 +98,8 @@ $(document).ready(function () {
       processData: false,
       data: formData,
       success: function (data) {
-        window.location.reload();
+        console.log(data);
+        // window.location.reload();
       },
       error: function (error) {
         console.error("Error:", error);

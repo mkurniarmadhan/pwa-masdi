@@ -8,12 +8,18 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "db_pwa";
+// $username = "u694229934_masdi";
+// $password = "Masdi321#";
+// $dbname = "u694229934_masdi";
+
+
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die(json_encode(["error" => $conn->connect_error]));
 }
+
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -27,6 +33,69 @@ function handleFileUpload($file)
         // return $file['name'];
     }
     return null;
+}
+
+
+
+function handleSendNotif()
+{
+
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "db_pwa";
+    // $username = "u694229934_masdi";
+    // $password = "Masdi321#";
+    // $dbname = "u694229934_masdi";
+
+
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    $sql = "SELECT * FROM notifikasi";
+    $result = $conn->query($sql);
+    $tokens = [];
+    while ($row = $result->fetch_assoc()) {
+        $tokens[] = $row;
+    }
+
+    $serverKey = 'AAAAiyFEpYA:APA91bGf75IoZA9zfmixAziXF6tKl2jfspN3l_d6HZ4GMGSGR0Wb9tm09dUuxTiRJqV2J5hM-VnaUBCnBp3fblSHrdlxic_03XQESrrJlDAoRkKJ9DuvGnA9UYc29Y7n4ujtvwOVPHCO';
+
+
+    $notification = [
+        'title' => 'New Item Added',
+        'body' => 'A new item has been added to the inventory.'
+    ];
+
+    $data = [
+        'registration_ids' => $tokens,
+        'notification' => $notification,
+    ];
+
+    $headers = [
+        'Authorization: key=' . $serverKey,
+        'Content-Type: application/json',
+    ];
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+    $response = curl_exec($ch);
+    $err = curl_error($ch);
+
+    curl_close($ch);
+
+
+
+    if ($err) {
+        return $err;
+    } else {
+        return $response;
+    }
 }
 
 
@@ -57,10 +126,9 @@ switch ($method) {
 
         $foto = handleFileUpload($_FILES['foto']);
 
-
         $sql = "INSERT INTO barang (nama_barang, harga, foto) VALUES ('$nama', '$harga','$foto')";
         if ($conn->query($sql) === TRUE) {
-            // sendNotif();
+            handleSendNotif();
             echo json_encode(["id" => $conn->insert_id]);
         } else {
             echo json_encode(["error" => $conn->error]);

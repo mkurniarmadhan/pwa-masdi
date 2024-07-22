@@ -8,7 +8,7 @@
 
   <link rel="apple-touch-icon" href="/icons/android-launchericon-72-72.png">
   <link rel="icon" href="/icons//android-launchericon-72-72.png">
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="/icons/manifest.json">
 
 
   <title>HOME</title>
@@ -81,7 +81,7 @@
 
   <script src="./js/main.js"></script>
 
-  <script src="./pwa.js"></script>
+  <script src="./js/pwa.js"></script>
 
   <!--  -->
 

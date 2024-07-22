@@ -1,7 +1,7 @@
 const SETTINGS = {
   appName: "pwa",
   remindAfterHours: 24, // Number of hours to wait before showing the prompt again
-  serviceWorkerFile: "/service-worker.js", // Service worker file path and name
+  serviceWorkerFile: "/sw.js", // Service worker file path and name
   serviceWorkerScope: "/", // Scope of the service worker
   diagnostics: false, // Set to true to enable diagnostic logs
 };
@@ -99,9 +99,7 @@ const installPwa = () => {
     return;
   }
 
-  const PromtHTML = `
-
-          <div class="modal fade" id="${promptId}" tabindex="-1" aria-labelledby="${promptId}Label" aria-hidden="true">
+  const PromtHTML = `<div class="modal fade" id="${promptId}" tabindex="-1" aria-labelledby="${promptId}Label" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -166,20 +164,18 @@ function initializeFCM() {
     .requestPermission()
     .then(() => {
       console.log("Notification permission granted.");
-
       return messaging.getToken();
     })
     .then((token) => {
       $.ajax({
-        url: "./api/api-notifikasi.php",
+        url: "./api/notifikasi.php",
         type: "POST",
         dataType: "json",
         data: {
-          type: "token",
           token: token,
         },
         success: function (data) {
-          if (data.status === "success") {
+          if (data) {
             localStorage.setItem(notifKey, token); // Set the installedKey value to true
           }
         },
@@ -210,13 +206,6 @@ const setupPwa = () => {
     window.matchMedia("(display-mode: standalone)").matches;
 
   if ((os === "iOS" && browser === "Safari") || browser === "Chrome") {
-    // Specific instructions for Safari on iOS
-    // setTimeout(() => {
-    //   if (!isInStandaloneMode()) {
-    //     installPwa();
-    //     logMessage("PWA installation prompt has been displayed.");
-    //   }
-    // }, 3500);
     window.addEventListener("beforeinstallprompt", (e) => {
       // Log message
       logMessage(`'beforeinstallprompt' event was fired.`);
